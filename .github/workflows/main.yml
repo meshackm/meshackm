@@ -1,2 +1,134 @@
-- name: Metrics embed
-  uses: lowlighter/metrics@v3.34
+name: Metrics
+
+on:
+  schedule:
+    # Runs every day at midnight UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+
+      # ──────────────────────────────────────────
+      # 📅 Isometric commit calendar (full year)
+      # ──────────────────────────────────────────
+      - name: 📅 Isometric calendar
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: meshackm
+          filename: metrics.isocalendar.svg
+          base: ""
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+
+      # ──────────────────────────────────────────
+      # 🈷️ Languages activity (indepth)
+      # ──────────────────────────────────────────
+      - name: 🈷️ Languages
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: meshackm
+          filename: metrics.languages.svg
+          base: ""
+          plugin_languages: yes
+          plugin_languages_indepth: yes
+          plugin_languages_details: lines, bytes-size, percentage
+          plugin_languages_limit: 8
+          plugin_languages_sections: most-used
+
+      # ──────────────────────────────────────────
+      # 🏆 Achievements (detailed display)
+      # ──────────────────────────────────────────
+      - name: 🏆 Achievements
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: meshackm
+          filename: metrics.achievements.svg
+          base: ""
+          plugin_achievements: yes
+          plugin_achievements_display: detailed
+          plugin_achievements_secrets: yes
+          plugin_achievements_limit: 0
+
+      # ──────────────────────────────────────────
+      # 💡 Coding habits & activity charts
+      # ──────────────────────────────────────────
+      - name: 💡 Habits
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: meshackm
+          filename: metrics.habits.svg
+          base: ""
+          plugin_habits: yes
+          plugin_habits_facts: yes
+          plugin_habits_charts: yes
+          plugin_habits_trim: yes
+          plugin_habits_days: 14
+          plugin_habits_from: 200
+
+      # ──────────────────────────────────────────
+      # 📰 Recent activity (last 14 days)
+      # ──────────────────────────────────────────
+      - name: 📰 Recent activity
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: meshackm
+          filename: metrics.activity.svg
+          base: ""
+          plugin_activity: yes
+          plugin_activity_limit: 5
+          plugin_activity_days: 14
+          plugin_activity_filter: all
+          plugin_activity_visibility: all
+
+      # ──────────────────────────────────────────
+      # ✨ Stargazers over time (graph style)
+      # ──────────────────────────────────────────
+      - name: ✨ Stargazers
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: meshackm
+          filename: metrics.stargazers.svg
+          base: ""
+          plugin_stargazers: yes
+          plugin_stargazers_charts_type: graph
+
+      # ──────────────────────────────────────────
+      # 👨‍💻 Lines of code changed
+      # ──────────────────────────────────────────
+      - name: 👨‍💻 Lines of code
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: meshackm
+          filename: metrics.lines.svg
+          base: repositories
+          plugin_lines: yes
+          plugin_lines_history_limit: 1
+
+      # ──────────────────────────────────────────
+      # 🎟️ Follow-up: issues & pull requests
+      # ──────────────────────────────────────────
+      - name: 🎟️ Follow-up issues & PRs
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: meshackm
+          filename: metrics.followup.svg
+          base: ""
+          plugin_followup: yes
+          plugin_followup_indepth: yes
+          plugin_followup_sections: repositories
