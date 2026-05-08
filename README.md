@@ -96,11 +96,3 @@
 
 </div>
 
----
-
-<div align="center">
-
-*📈 Metrics auto-updated daily via [lowlighter/metrics](https://github.com/lowlighter/metrics)*
-
-</div>
-
